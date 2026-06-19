@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WMOS Deal — Interactive Cost Calculator</title>
+<style>
+  :root{
+    --navy:#1f3864; --blue:#2e75b6; --sky:#eaf1f8; --sky2:#d5e8f0;
+    --green:#1e7d52; --ink:#1c2a3a; --grey:#5b6b7d; --line:#cdd9e6;
+    --shadow:0 2px 10px rgba(31,56,100,.10);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:#f4f8fc; color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding:0 18px 60px}
+  header{
+    background:linear-gradient(135deg,var(--navy),var(--blue));
+    color:#fff; padding:28px 18px; text-align:center;
+  }
+  header h1{margin:0 0 6px; font-size:28px; letter-spacing:.2px}
+  header p{margin:0; opacity:.92; font-size:15px}
+  .intro{
+    background:var(--sky); border-left:6px solid var(--blue);
+    border-radius:8px; padding:16px 18px; margin:22px 0; font-size:15px;
+  }
+  .intro b{color:var(--navy)}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:20px; box-shadow:var(--shadow);
+  }
+  .card h2{
+    margin:0 0 4px; font-size:18px; color:var(--navy);
+    display:flex; align-items:center; gap:8px;
+  }
+  .card .sub{margin:0 0 16px; color:var(--grey); font-size:13px}
+  .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px;height:26px;border-radius:50%;background:var(--blue);
+    color:#fff;font-size:14px;font-weight:700;flex:none;
+  }
+  .field{margin-bottom:18px}
+  .field label{display:block; font-weight:700; font-size:15px; margin-bottom:2px}
+  .field .hint{color:var(--grey); font-size:12.5px; margin-bottom:8px}
+  .inrow{display:flex; align-items:center; gap:10px}
+  input[type=number]{
+    width:100%; font-size:17px; padding:10px 12px; border:1.5px solid var(--line);
+    border-radius:8px; font-family:inherit; color:var(--ink); background:#fbfdff;
+  }
+  input[type=number]:focus{outline:none;border-color:var(--blue);background:#fff}
+  input[type=range]{width:100%; accent-color:var(--blue); height:6px}
+  .rangeval{font-weight:800; color:var(--navy); font-size:18px; min-width:54px; text-align:right}
+  .chips{display:flex; gap:8px; margin-top:8px; flex-wrap:wrap}
+  .chip{
+    border:1.5px solid var(--blue); color:var(--blue); background:#fff;
+    border-radius:20px; padding:5px 14px; font-size:13px; font-weight:700;
+    cursor:pointer; transition:.12s;
+  }
+  .chip:hover{background:var(--sky)}
+  .chip.active{background:var(--blue); color:#fff}
+  .radio{display:flex; flex-direction:column; gap:8px}
+  .radio label{
+    display:flex; gap:10px; align-items:flex-start; font-weight:600; font-size:14px;
+    border:1.5px solid var(--line); border-radius:8px; padding:10px 12px; cursor:pointer;
+  }
+  .radio label.sel{border-color:var(--blue); background:var(--sky)}
+  .radio input{margin-top:3px; accent-color:var(--blue)}
+  .radio .rh{color:var(--grey); font-weight:400; font-size:12.5px; display:block}
+
+  /* Results */
+  .results{margin-top:22px}
+  .bigrow{display:grid; grid-template-columns:repeat(4,1fr); gap:14px}
+  @media(max-width:760px){.bigrow{grid-template-columns:1fr 1fr}}
+  .stat{
+    background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:16px; text-align:center; box-shadow:var(--shadow);
+  }
+  .stat .lbl{font-size:12.5px; color:var(--grey); font-weight:700; text-transform:uppercase; letter-spacing:.4px}
+  .stat .val{font-size:24px; font-weight:800; margin-top:6px; color:var(--navy)}
+  .stat.total{background:linear-gradient(135deg,var(--navy),var(--blue)); border:none}
+  .stat.total .lbl{color:#cfe0f2}
+  .stat.total .val{color:#fff; font-size:28px}
+  .stat.gross .val{color:var(--ink)}
+  .stat.fee .val{color:var(--green)}
+
+  .plain{
+    background:var(--sky2); border-radius:12px; padding:18px 20px; margin-top:18px;
+    font-size:17px; line-height:1.6;
+  }
+  .plain b{color:var(--navy)}
+  .plain .pop{color:var(--blue); font-weight:800}
+
+  table{width:100%; border-collapse:collapse; margin-top:8px; font-size:14px}
+  th,td{padding:10px 12px; text-align:right; border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{background:var(--navy); color:#fff; font-size:13px}
+  tbody tr:nth-child(even){background:#f6fafe}
+  .barwrap{background:#eef4fa; border-radius:6px; height:14px; overflow:hidden; min-width:60px}
+  .bar{height:100%; background:linear-gradient(90deg,var(--blue),var(--navy)); border-radius:6px}
+
+  .mix{display:grid; grid-template-columns:1fr auto; gap:8px 14px; align-items:center}
+  .mix label{font-weight:600; font-size:14px}
+  .mix input{width:90px}
+  .mixtot{font-weight:800; color:var(--navy); font-size:18px}
+  .usebtn{
+    margin-top:12px; width:100%; background:var(--blue); color:#fff; border:none;
+    border-radius:8px; padding:11px; font-size:15px; font-weight:700; cursor:pointer;
+  }
+  .usebtn:hover{background:var(--navy)}
+  .note{font-size:12.5px; color:var(--grey); margin-top:8px}
+  h3.sec{color:var(--navy); margin:32px 0 10px; font-size:19px; border-bottom:2px solid var(--blue); padding-bottom:6px}
+  .foot{color:var(--grey); font-size:12px; text-align:center; margin-top:30px}
+</style>
+</head>
+<body>
+<header>
+  <h1>WMOS Deal — Cost &amp; Earnings Calculator</h1>
+  <p>Move the sliders and type the numbers. The results update instantly.</p>
+</header>
+
+<div class="wrap">
+
+  <div class="intro">
+    <b>How to read this in one breath:</b> Patients pay for arches. IW earns money two ways —
+    a flat <b>retainer</b> (paid no matter what) plus a <b>performance fee</b> (a % of arch revenue).
+    Add them together and you get IW's <b>total earnings</b>. Change any input below to test a scenario.
+  </div>
+
+  <div class="grid">
+    <!-- INPUTS -->
+    <div class="card">
+      <h2><span class="num">1</span> Your Inputs</h2>
+      <p class="sub">Type a number or drag the slider. Quick-pick buttons fill in common values.</p>
+
+      <div class="field">
+        <label>Retainer amount</label>
+        <div class="hint">Flat fee IW is paid over 12 months — earned even if zero arches happen.</div>
+        <div class="inrow"><span>$</span><input type="number" id="retainer" value="42500" step="500" min="0"></div>
+        <div class="chips">
+          <span class="chip" data-t="retainer" data-v="40000">$40,000</span>
+          <span class="chip" data-t="retainer" data-v="45000">$45,000</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Price per arch</label>
+        <div class="hint">What the patient pays for one full-arch case.</div>
+        <div class="inrow"><span>$</span><input type="number" id="price" value="25500" step="500" min="0"></div>
+        <div class="chips">
+          <span class="chip" data-t="price" data-v="23500">$23,500</span>
+          <span class="chip" data-t="price" data-v="25500">$25,500</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Number of arches <span id="archesVal" class="rangeval">100</span></label>
+        <div class="hint">Total full-arch cases over the 12-month ramp (goal is 100).</div>
+        <input type="range" id="arches" min="0" max="150" value="100">
+      </div>
+
+      <div class="field">
+        <label>Performance fee <span id="feeVal" class="rangeval">10%</span></label>
+        <div class="hint">IW's cut of arch revenue. The deal is 10%.</div>
+        <input type="range" id="fee" min="0" max="20" value="10" step="0.5">
+      </div>
+
+      <div class="field">
+        <label>Fee trigger (arches) <span id="trigVal" class="rangeval">18</span></label>
+        <div class="hint">The fee doesn't start until this many arches are done. Notes say 15–20.</div>
+        <input type="range" id="trigger" min="0" max="40" value="18">
+      </div>
+
+      <div class="field">
+        <label>How the fee kicks in</label>
+        <div class="hint">This is an open decision for the meeting — try each one.</div>
+        <div class="radio" id="model">
+          <label class="sel"><input type="radio" name="m" value="flat" checked>
+            <span>Flat 10% on every arch
+              <span class="rh">Matches the headline “$235K–$255K at 100 arches.” Trigger ignored.</span></span></label>
+          <label><input type="radio" name="m" value="above">
+            <span>Only on arches past the trigger
+              <span class="rh">Most conservative — first 18 arches earn no fee.</span></span></label>
+          <label><input type="radio" name="m" value="after">
+            <span>Nothing until trigger, then 10% on everything
+              <span class="rh">No fee early; once you hit the trigger, full % on all arches.</span></span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SURGEON MIX HELPER -->
+    <div class="card">
+      <h2><span class="num">2</span> Surgeon Mix (optional)</h2>
+      <p class="sub">Set how many arches each surgeon does. Use it to fill the arch count above.</p>
+      <div class="mix">
+        <label>Mark</label><input type="number" class="mixn" id="s1" value="12" min="0">
+        <label>Partner A</label><input type="number" class="mixn" id="s2" value="12" min="0">
+        <label>Partner B</label><input type="number" class="mixn" id="s3" value="50" min="0">
+        <label>Partner C</label><input type="number" class="mixn" id="s4" value="25" min="0">
+      </div>
+      <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-weight:700">Mix total</span>
+        <span class="mixtot" id="mixTotal">99</span>
+      </div>
+      <div class="note" id="mixWarn">⚠ Notes show 12+12+50+25 = 99. Confirm the exact split to land on 100.</div>
+      <button class="usebtn" id="useMix">Use this total as the arch count →</button>
+
+      <h2 style="margin-top:26px"><span class="num">3</span> Plain-English Summary</h2>
+      <div class="plain" id="summary"></div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results">
+    <h3 class="sec">What IW Earns</h3>
+    <div class="bigrow">
+      <div class="stat gross"><div class="lbl">Arch revenue (gross)</div><div class="val" id="rGross">—</div></div>
+      <div class="stat"><div class="lbl">Retainer</div><div class="val" id="rRet">—</div></div>
+      <div class="stat fee"><div class="lbl">Performance fee</div><div class="val" id="rFee">—</div></div>
+      <div class="stat total"><div class="lbl">Total IW earnings</div><div class="val" id="rTotal">—</div></div>
+    </div>
+    <p class="note" id="effRate" style="text-align:center;margin-top:14px"></p>
+  </div>
+
+  <!-- SCENARIO TABLE -->
+  <h3 class="sec">How Earnings Grow With Volume</h3>
+  <p class="sub" style="color:var(--grey);margin-top:-2px">Using your current price, fee %, trigger, and model. The bar shows total IW earnings.</p>
+  <div class="card" style="padding:8px 16px 16px">
+    <table>
+      <thead><tr><th>Arches</th><th>Gross revenue</th><th>Performance fee</th><th>+ Retainer</th><th>Total IW</th><th style="width:130px">vs. 100 arches</th></tr></thead>
+      <tbody id="scenBody"></tbody>
+    </table>
+  </div>
+
+  <p class="foot">For internal planning only. The fee trigger and step-up model are still being decided — this tool exists to test those choices, not to state final terms.</p>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const money = n => "$" + Math.round(n).toLocaleString("en-US");
+  const moneyK = n => n >= 1000 ? "$" + (Math.round(n/100)/10).toLocaleString() + "K" : "$" + Math.round(n);
+
+  let modelType = "flat";
+
+  function computeFee(arches, price, feePct, trigger){
+    const rate = feePct/100;
+    const gross = arches * price;
+    if(modelType === "flat")  return rate * gross;
+    if(modelType === "above") return rate * price * Math.max(0, arches - trigger);
+    if(modelType === "after") return arches >= trigger ? rate * gross : 0;
+    return 0;
+  }
+
+  function calc(){
+    const retainer = +$("retainer").value || 0;
+    const price    = +$("price").value || 0;
+    const arches   = +$("arches").value || 0;
+    const feePct   = +$("fee").value || 0;
+    const trigger  = +$("trigger").value || 0;
+
+    $("archesVal").textContent = arches;
+    $("feeVal").textContent = feePct + "%";
+    $("trigVal").textContent = trigger;
+
+    const gross = arches * price;
+    const fee   = computeFee(arches, price, feePct, trigger);
+    const total = retainer + fee;
+
+    $("rGross").textContent = money(gross);
+    $("rRet").textContent   = money(retainer);
+    $("rFee").textContent   = money(fee);
+    $("rTotal").textContent = money(total);
+
+    const eff = gross > 0 ? (fee/gross*100) : 0;
+    $("effRate").textContent =
+      "Effective fee = " + eff.toFixed(1) + "% of gross  •  Average to IW per arch = " +
+      (arches>0 ? money(total/arches) : "$0");
+
+    // Summary
+    $("summary").innerHTML =
+      "At <span class='pop'>" + arches + " arches</span> priced at <span class='pop'>" + money(price) +
+      "</span>, patients pay <b>" + money(gross) + "</b> in total. IW earns a <b>" + money(retainer) +
+      "</b> retainer plus a <b>" + money(fee) + "</b> performance fee — a total of <span class='pop'>" +
+      money(total) + "</span>.";
+
+    buildScenarios(price, feePct, trigger, retainer);
+  }
+
+  function buildScenarios(price, feePct, trigger, retainer){
+    const rows = [15,25,50,75,100,150];
+    const totals = rows.map(a => retainer + computeFee(a,price,feePct,trigger));
+    const max = Math.max(...totals,1);
+    const ref = retainer + computeFee(100,price,feePct,trigger);
+    let html = "";
+    rows.forEach((a,i)=>{
+      const gross = a*price, fee = computeFee(a,price,feePct,trigger), total = totals[i];
+      const pct = Math.round(total/max*100);
+      const vs = ref>0 ? Math.round(total/ref*100)+"%" : "—";
+      html += "<tr><td><b>"+a+"</b></td><td>"+money(gross)+"</td><td>"+money(fee)+
+        "</td><td>"+money(retainer)+"</td><td><b>"+money(total)+"</b></td>"+
+        "<td><div class='barwrap'><div class='bar' style='width:"+pct+"%'></div></div>"+
+        "<div class='note' style='margin:2px 0 0'>"+vs+"</div></td></tr>";
+    });
+    $("scenBody").innerHTML = html;
+  }
+
+  // Chips (quick picks)
+  document.querySelectorAll(".chip").forEach(c=>{
+    c.addEventListener("click",()=>{ $(c.dataset.t).value = c.dataset.v; markChips(); calc(); });
+  });
+  function markChips(){
+    document.querySelectorAll(".chip").forEach(c=>{
+      c.classList.toggle("active", +$(c.dataset.t).value === +c.dataset.v);
+    });
+  }
+
+  // Model radios
+  document.querySelectorAll('#model input').forEach(r=>{
+    r.addEventListener("change",()=>{
+      modelType = r.value;
+      document.querySelectorAll('#model label').forEach(l=>l.classList.remove('sel'));
+      r.closest('label').classList.add('sel');
+      calc();
+    });
+  });
+
+  // Surgeon mix
+  function mixSum(){ return ["s1","s2","s3","s4"].reduce((s,id)=>s+(+$(id).value||0),0); }
+  function updateMix(){
+    const t = mixSum();
+    $("mixTotal").textContent = t;
+    $("mixWarn").style.display = t === 100 ? "none" : "block";
+    if(t!==100) $("mixWarn").textContent = "⚠ Mix totals "+t+". Adjust to land exactly on 100.";
+  }
+  document.querySelectorAll(".mixn").forEach(i=>i.addEventListener("input",updateMix));
+  $("useMix").addEventListener("click",()=>{
+    const t = Math.min(150, mixSum());
+    $("arches").value = t; calc();
+  });
+
+  // Live updates
+  ["retainer","price","arches","fee","trigger"].forEach(id=>{
+    $(id).addEventListener("input",()=>{ markChips(); calc(); });
+  });
+
+  markChips(); updateMix(); calc();
+</script>
+</body>
+</html>
