@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WMOS — Service Offering &amp; Value Proposition Worksheet</title>
+<style>
+  :root{
+    --navy:#1f3864; --blue:#2e75b6; --sky:#eaf1f8; --sky2:#d5e8f0;
+    --green:#1e7d52; --amber:#b9770e; --red:#b3402e;
+    --ink:#1c2a3a; --grey:#5b6b7d; --line:#cdd9e6;
+    --shadow:0 2px 12px rgba(31,56,100,.10);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#f4f8fc;color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 18px 80px}
+  header{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:30px 18px;text-align:center;position:relative}
+  header h1{margin:0 0 6px;font-size:27px}
+  header p{margin:0;opacity:.92;font-size:15px}
+  .toolbar{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);
+    box-shadow:0 2px 8px rgba(0,0,0,.05);padding:10px 18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center}
+  .toolbar .saved{font-size:12.5px;color:var(--green);margin-right:auto;font-weight:700}
+  .toolbar button{border:1.5px solid var(--blue);background:#fff;color:var(--blue);border-radius:8px;
+    padding:8px 14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit}
+  .toolbar button:hover{background:var(--sky)}
+  .toolbar button.primary{background:var(--blue);color:#fff}
+  .toolbar button.primary:hover{background:var(--navy)}
+
+  .intro{background:var(--sky);border-left:6px solid var(--blue);border-radius:8px;padding:16px 18px;margin:22px 0;font-size:15px}
+  .intro b{color:var(--navy)}
+
+  section.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:var(--shadow);margin:22px 0}
+  .sechead{display:flex;align-items:center;gap:12px;margin:0 0 4px}
+  .secnum{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;
+    background:var(--navy);color:#fff;font-size:16px;font-weight:800;flex:none}
+  .sechead h2{margin:0;font-size:20px;color:var(--navy)}
+  .secsub{color:var(--grey);font-size:13.5px;margin:0 0 18px 44px}
+
+  label.fld{display:block;font-weight:700;font-size:14.5px;margin:14px 0 4px}
+  .tip{color:var(--grey);font-size:12.5px;margin:0 0 6px}
+  input[type=text],textarea{width:100%;font-family:inherit;font-size:14.5px;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;background:#fbfdff;resize:vertical}
+  input[type=text]:focus,textarea:focus{outline:none;border-color:var(--blue);background:#fff}
+  textarea{min-height:62px;line-height:1.5}
+
+  .check{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed #e2ebf4}
+  .check:last-child{border-bottom:none}
+  .check input[type=checkbox]{margin-top:3px;width:18px;height:18px;accent-color:var(--blue);flex:none}
+  .check .ctxt{font-size:14.5px}
+  .check .ctxt b{color:var(--navy)}
+  .check .cnote{margin-top:5px}
+
+  .lead{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 4px}
+  .lead .pill{display:flex;gap:7px;align-items:center;border:1.5px solid var(--line);border-radius:20px;padding:6px 13px;font-size:13px;cursor:pointer}
+  .lead .pill input{accent-color:var(--blue)}
+  .lead .pill.on{border-color:var(--blue);background:var(--sky);font-weight:700;color:var(--navy)}
+
+  /* offering rows */
+  .part{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0;background:#fbfdff}
+  .part .ph{display:flex;align-items:center;gap:10px}
+  .part .pn{width:26px;height:26px;border-radius:6px;background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px;flex:none}
+  .part h3{margin:0;font-size:15.5px;color:var(--navy)}
+  .part .pdesc{font-size:13px;color:var(--grey);margin:4px 0 8px 36px}
+  .part .pin{margin-left:36px}
+  .toggle{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--grey);display:flex;gap:6px;align-items:center;cursor:pointer}
+  .toggle input{width:16px;height:16px;accent-color:var(--green)}
+
+  /* scope buckets */
+  .scope{display:grid;grid-template-columns:2.4fr 1fr;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed #e2ebf4}
+  .scope:last-child{border-bottom:none}
+  .scope .sname{font-size:14px;font-weight:600}
+  .scope .sname small{display:block;color:var(--grey);font-weight:400;font-size:12px}
+  .seg{display:flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
+  .seg label{flex:1;text-align:center;font-size:11.5px;font-weight:700;padding:7px 4px;cursor:pointer;color:var(--grey)}
+  .seg label.inc.on{background:var(--green);color:#fff}
+  .seg label.add.on{background:var(--amber);color:#fff}
+  .seg label.out.on{background:var(--grey);color:#fff}
+  .seg input{display:none}
+  @media(max-width:640px){.scope{grid-template-columns:1fr}}
+
+  /* timeline */
+  .tl{position:relative;margin-left:8px;padding-left:24px;border-left:3px solid var(--sky2)}
+  .phase{position:relative;margin-bottom:18px}
+  .phase::before{content:"";position:absolute;left:-31px;top:3px;width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 2px var(--blue)}
+  .phase .pt{font-weight:800;color:var(--navy);font-size:15px}
+  .phase .pwhen{font-size:12.5px;color:var(--blue);font-weight:700;margin-left:8px}
+  .phase .pbody{font-size:13.5px;color:var(--grey);margin:3px 0 8px}
+  .phase .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:640px){.phase .row2{grid-template-columns:1fr}}
+  .mini{font-size:12px;font-weight:700;color:var(--grey);display:block;margin-bottom:2px}
+
+  .flag{background:#fdeee9;border-left:5px solid var(--red);border-radius:8px;padding:12px 14px;margin:14px 0;font-size:13.5px}
+  .flag b{color:var(--red)}
+
+  /* people */
+  .people{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.people{grid-template-columns:1fr}}
+  .person{border:1px solid var(--line);border-radius:10px;padding:16px;background:#fbfdff}
+  .person .phd{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;
+    font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;flex:none}
+  .person h3{margin:0;font-size:16px;color:var(--navy)}
+  .person .role{font-size:12px;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+
+  .foot{color:var(--grey);font-size:12px;text-align:center;margin-top:24px;line-height:1.6}
+
+  @media print{
+    .toolbar{display:none}
+    body{background:#fff}
+    section.card,.person,.part{box-shadow:none;break-inside:avoid}
+    header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>WMOS — Service Offering &amp; Value Proposition Worksheet</h1>
+  <p>Fill this in together to lock what we offer, our scope, and who brings what to the WMOS meeting.</p>
+</header>
+
+<div class="toolbar">
+  <span class="saved" id="savedMsg">Auto-saving on this device…</span>
+  <button onclick="downloadAnswers()">⬇ Download answers</button>
+  <button onclick="window.print()">🖨 Print / Save PDF</button>
+  <button class="primary" onclick="resetAll()">↺ Reset</button>
+</div>
+
+<div class="wrap">
+
+  <div class="intro">
+    <b>North star for WMOS (B2B):</b> We are <b>not an agency</b> — we are a clinical-commercial operating system.
+    Lead every B2B conversation with the <b>Patient-Specific Protocol™ (PSP™)</b>, our proprietary clinical standard.
+    Everything below either confirms our default (pre-filled from project context) or flags it for the team to decide.
+    Your entries save automatically on this computer.
+  </div>
+
+  <!-- 1. WHO WE ARE -->
+  <section class="card">
+    <div class="sechead"><span class="secnum">1</span><h2>Who We Are — Positioning</h2></div>
+    <p class="secsub">The one-liner WMOS should walk away repeating. Edit until it's tight.</p>
+
+    <label class="fld">One-line positioning</label>
+    <p class="tip">Default pulled from the IW site. Make it WMOS-specific if needed.</p>
+    <input type="text" id="pos_oneline" value="A clinical-commercial operating system for surgeon-led full-arch — the system that runs in our own practice, packaged to deploy in yours. Not an agency.">
+
+    <label class="fld">Core promise (lead with this for B2B)</label>
+    <input type="text" id="pos_promise" value="The Patient-Specific Protocol™ (PSP™): every case planned from scratch — bone, anatomy, circumstances. No templates. The protocol is the product.">
+
+    <label class="fld">Which proof anchors do we lead with for WMOS?</label>
+    <p class="tip">Pick the 3–4 that land hardest with a 7-surgeon group.</p>
+    <div class="lead" id="anchors">
+      <label class="pill on"><input type="checkbox" id="a_omfs" checked> Board-certified OMFS (ABOMS)</label>
+      <label class="pill on"><input type="checkbox" id="a_vol" checked> 35+ yrs / 15,000+ implants</label>
+      <label class="pill on"><input type="checkbox" id="a_psp" checked> PSP™ proprietary protocol</label>
+      <label class="pill"><input type="checkbox" id="a_ada"> ADA Innovation Advisory Committee</label>
+      <label class="pill"><input type="checkbox" id="a_nhl"> Former Blackhawks (NHL) team surgeon</label>
+      <label class="pill on"><input type="checkbox" id="a_run" checked> Runs live in our own practice (proof of concept)</label>
+    </div>
+
+    <label class="fld">Why us, not a marketing agency? (one sentence)</label>
+    <input type="text" id="pos_vsagency" value="Most competitors sell ads, leads, or a bit of sales coaching. We install the whole clinical-commercial system — built by a board-certified surgeon, not an outside marketer.">
+
+    <label class="fld">The mutual-learning angle (relationship framing)</label>
+    <input type="text" id="pos_mutual" value="A long-term, friendly partnership: we learn from their group's volume, they learn our system — we only win when their full-arch program wins.">
+  </section>
+
+  <!-- 2. WHAT WE OFFER -->
+  <section class="card">
+    <div class="sechead"><span class="secnum">2</span><h2>What We Offer — One Platform, Five Working Parts</h2></div>
+    <p class="secsub">Check what's in the WMOS offer and note what each part concretely means for them. (The parts compound — that's the pitch.)</p>
+
+    <div class="part">
+      <div class="ph"><span class="pn">1</span><h3>Patient-Specific Protocol™ &amp; Clinical Standard</h3>
+        <label class="toggle"><input type="checkbox" id="o1_in" checked> In offer</label></div>
+      <p class="pdesc">The proprietary clinical core — every case planned from scratch, surgeon-led, outcome-accountable.</p>
+      <div class="pin"><textarea id="o1_note" placeholder="What this means for WMOS…">Dr. Pulver case review + the PSP planning standard installed in their workflow; named protocol they can market but not have copied.</textarea></div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="pn">2</span><h3>AI Photogrammetry &amp; 3D Planning</h3>
+        <label class="toggle"><input type="checkbox" id="o2_in" checked> In offer</label></div>
+      <p class="pdesc">The engine the protocol runs on — makes case-specific planning concrete.</p>
+      <div class="pin"><textarea id="o2_note" placeholder="What this means for WMOS…">Photogrammetry + 3D planning integration; SprintRay printer routed into our setup so WMOS doesn't output their own (third-party step required).</textarea></div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="pn">3</span><h3>Digital Workflow (Print · Stain · Glaze)</h3>
+        <label class="toggle"><input type="checkbox" id="o3_in" checked> In offer</label></div>
+      <p class="pdesc">Prosthetic outcome owned end-to-end with structured training.</p>
+      <div class="pin"><textarea id="o3_note" placeholder="What this means for WMOS…">Digital workflow training (printing, staining, glazing) — priced as an add-on on top of the 10%.</textarea></div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="pn">4</span><h3>Marketing &amp; CRM Infrastructure</h3>
+        <label class="toggle"><input type="checkbox" id="o4_in"> In offer</label></div>
+      <p class="pdesc">Full demand engine — campaigns, landing pages, GHL CRM, automated follow-up, referral network.</p>
+      <div class="pin"><textarea id="o4_note" placeholder="What this means for WMOS…">OPEN DECISION: do we take over their general marketing + SEO + Instagram and redirect their current agency spend to us? Decide on capacity + margin first.</textarea></div>
+    </div>
+
+    <div class="part">
+      <div class="ph"><span class="pn">5</span><h3>Clinical Training &amp; Mentorship</h3>
+        <label class="toggle"><input type="checkbox" id="o5_in" checked> In offer</label></div>
+      <p class="pdesc">Cadaver + live-surgical training plus first-case support — surgeons reach fluency with a mentor in the room.</p>
+      <div class="pin"><textarea id="o5_note" placeholder="What this means for WMOS…">Cadaver course (Phoenix) or live treatment (Mexico) as paid add-ons; first-case support free initially, small fee for later cases.</textarea></div>
+    </div>
+  </section>
+
+  <!-- 3. SCOPE -->
+  <section class="card">
+    <div class="sechead"><span class="secnum">3</span><h2>Scope — What's Included vs. Add-On vs. Out</h2></div>
+    <p class="secsub">Tap a bucket for each item. Green = covered by retainer + 10%. Amber = billable add-on. Grey = out of scope / WMOS owns. (Defaults set from the deal notes.)</p>
+    <div id="scopeList"></div>
+    <p class="flag" style="background:#fff8e9;border-left-color:var(--amber)">
+      <b>Biggest open scope call:</b> the marketing / SEO / Instagram takeover. It's revenue, but it's capacity-heavy — decide yes/no before Meeting 1.</p>
+  </section>
+
+  <!-- 4. CASCADE OF EVENTS -->
+  <section class="card">
+    <div class="sechead"><span class="secnum">4</span><h2>Cascade of Events — How the Rollout Sequences</h2></div>
+    <p class="secsub">The order things happen, from pitch to a full 100-arch program. Add an owner and target date to each phase.</p>
+    <div class="tl" id="timeline"></div>
+    <div class="flag">
+      <b>RISK to design around:</b> the termination clause protects the retainer but leaves the 10% fee exposed —
+      WMOS could absorb the IP (digital workflow, staining/glazing, photogrammetry) and then terminate.
+      <b>Add a minimum-term or trained-IP protection clause before Meeting 1.</b>
+    </div>
+  </section>
+
+  <!-- 5. ONBOARDING MATERIALS -->
+  <section class="card">
+    <div class="sechead"><span class="secnum">5</span><h2>Materials to Prepare for Onboarding</h2></div>
+    <p class="secsub">Check what we'll build, who owns it, and its status. These are the assets the system runs on.</p>
+    <div id="materials"></div>
+  </section>
+
+  <!-- 6. NEXT MEETING -->
+  <section class="card">
+    <div class="sechead"><span class="secnum">6</span><h2>Next WMOS Meeting — Who Brings What</h2></div>
+    <p class="secsub">Each person owns a lane. Edit the bullets, then write your single must-bring deliverable.</p>
+    <div class="people" id="people"></div>
+  </section>
+
+  <p class="foot">
+    Internal planning worksheet • Implanted Wisdom × WMOS (Mark Lonagan Group)<br>
+    Built from project context (Master Context v1.1 + Addendum v1.2 + WMOS deal notes). Terms not finalized — this is for alignment, not a final offer.
+  </p>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  /* ---------- SCOPE ITEMS ---------- */
+  const scopeItems = [
+    ["sc_psp","PSP™ clinical standard + Dr. Pulver case review","Core of the offer","inc"],
+    ["sc_photo","Photogrammetry + 3D planning integration","The planning engine","inc"],
+    ["sc_kpi","KPI tracking & performance management","25/50/25 targets, scorecard","inc"],
+    ["sc_tc","Treatment coordinator training","Platinum Minute, call scripts, close method","inc"],
+    ["sc_gp","GP Inner Circle referral network","Referral tiers & management","inc"],
+    ["sc_mktg","General marketing + SEO + Instagram takeover","OPEN — redirect their agency spend?","add"],
+    ["sc_workflow","Digital workflow training (print/stain/glaze)","Additional charge","add"],
+    ["sc_cadaver","Cadaver course (Phoenix)","Outside training — additional charge","add"],
+    ["sc_live","Live treatment training (Mexico)","Outside training — additional charge","add"],
+    ["sc_sprint","SprintRay printer integration","Needs a third party first","add"],
+    ["sc_firstcase","First-case implementation support","Free initially, small fee later","add"],
+    ["sc_hire","Coordinator hires (treatment/surgical)","WMOS may hire or train front desk","out"],
+    ["sc_clin","Clinical execution & final case approval","WMOS owns this","out"],
+  ];
+  function renderScope(){
+    $("scopeList").innerHTML = scopeItems.map(([id,name,sub,def])=>`
+      <div class="scope">
+        <div class="sname">${name}<small>${sub}</small></div>
+        <div class="seg" data-id="${id}">
+          <label class="inc ${def==='inc'?'on':''}"><input type="radio" name="${id}" value="inc" ${def==='inc'?'checked':''}>Included</label>
+          <label class="add ${def==='add'?'on':''}"><input type="radio" name="${id}" value="add" ${def==='add'?'checked':''}>Add-on</label>
+          <label class="out ${def==='out'?'on':''}"><input type="radio" name="${id}" value="out" ${def==='out'?'checked':''}>Out</label>
+        </div>
+      </div>`).join("");
+    document.querySelectorAll(".seg").forEach(seg=>{
+      seg.querySelectorAll("input").forEach(inp=>{
+        inp.addEventListener("change",()=>{
+          seg.querySelectorAll("label").forEach(l=>l.classList.remove("on"));
+          inp.closest("label").classList.add("on"); save();
+        });
+      });
+    });
+  }
+
+  /* ---------- TIMELINE ---------- */
+  const phases = [
+    ["t_m1","Meeting 1 — Partner Group","Jul / Aug / Sep 2026","Present the structure and how it rolls up to the 7-surgeon group."],
+    ["t_m2","Meeting 2 — Execution Plan","Following meeting","Skylar + Jim present how it actually gets deployed."],
+    ["t_sign","Agreement Signed","Before onboarding","Lock retainer, 10% trigger/step-up, and the IP-protection / minimum-term clause."],
+    ["t_onb","Onboarding","Months 1–3","CRM/GHL build, marketing setup, workflow + clinical training, SprintRay/equipment, access grants."],
+    ["t_first","First Cases Live","Month 3–4","First full-arch cases run on the system; first-case support in the room."],
+    ["t_ramp","Ramp to 100 Arches","Months 4–15","Volume builds across the 4 participating surgeons; 10% fee steps up as arches grow."],
+  ];
+  function renderTimeline(){
+    $("timeline").innerHTML = phases.map(([id,t,when,body])=>`
+      <div class="phase">
+        <div><span class="pt">${t}</span><span class="pwhen">${when}</span></div>
+        <div class="pbody">${body}</div>
+        <div class="row2">
+          <div><span class="mini">Owner</span><input type="text" id="${id}_owner" placeholder="name"></div>
+          <div><span class="mini">Target date / key deliverable</span><input type="text" id="${id}_date" placeholder="date or deliverable"></div>
+        </div>
+      </div>`).join("");
+  }
+
+  /* ---------- MATERIALS ---------- */
+  const materials = [
+    ["mt_rollup","One-page deal rollup / partnership model (Meeting 1)","Jim"],
+    ["mt_deck","Execution-plan deck (Meeting 2)","Skylar + Jim"],
+    ["mt_ip","IP-protection / minimum-term clause language","Jim"],
+    ["mt_lp","Landing page template + brand assets","Skylar"],
+    ["mt_meta","Meta ad creative + campaign setup","Skylar"],
+    ["mt_crm","GHL CRM build + follow-up workflows","Skylar"],
+    ["mt_tc","Treatment coordinator training kit (Platinum Minute, scripts, close)","Skylar / Eric"],
+    ["mt_sop","Digital workflow SOPs (print / stain / glaze)","Eric"],
+    ["mt_train","Clinical training plan (cadaver / live + first-case schedule)","Eric"],
+    ["mt_kpi","KPI scorecard (25/50/25 targets)","Jackson"],
+    ["mt_sprint","SprintRay third-party integration plan","Jackson"],
+    ["mt_gp","GP Inner Circle referral framework","Eric / Jim"],
+    ["mt_track","Onboarding tracker + follow-up cadence (ClickUp)","Jackson"],
+  ];
+  function renderMaterials(){
+    $("materials").innerHTML = materials.map(([id,name,owner])=>`
+      <div class="check">
+        <input type="checkbox" id="${id}_done">
+        <div class="ctxt" style="flex:1">
+          <b>${name}</b>
+          <div class="cnote" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px">
+            <input type="text" id="${id}_owner" value="${owner}" placeholder="owner">
+            <input type="text" id="${id}_status" placeholder="status / due">
+          </div>
+        </div>
+      </div>`).join("");
+  }
+
+  /* ---------- PEOPLE ---------- */
+  const people = [
+    ["Skylar","SK","Marketing","p_sk",
+      "Demand engine: landing pages, Meta ads, GHL CRM + workflows\nBrand assets and the value-prop story\nFirst-case implementation support (with Eric)"],
+    ["Jackson","JK","Project Management","p_jk",
+      "Onboarding timeline + tracker (ClickUp)\nFollow-up cadence and status sweeps\nKPI scorecard (25/50/25); SprintRay third-party chase"],
+    ["Jim","JM","Strategy","p_jm",
+      "Deal economics: retainer, 10% trigger & step-up schedule\nContract + IP-protection / minimum-term clause\nPricing review before anything goes to WMOS"],
+    ["Eric (Dr. Pulver)","EP","Strategy + Clinical","p_ep",
+      "PSP™ standard and clinical credibility in the room\nClinical training plan + case review + final approval\nGP Inner Circle relationships; surgeon-to-surgeon trust"],
+  ];
+  function renderPeople(){
+    $("people").innerHTML = people.map(([name,init,role,id,bullets])=>`
+      <div class="person">
+        <div class="phd"><span class="avatar">${init}</span>
+          <div><h3>${name}</h3><span class="role">${role}</span></div></div>
+        <label class="fld" style="margin-top:10px">What I bring</label>
+        <textarea id="${id}_brings" style="min-height:90px">${bullets}</textarea>
+        <label class="fld">My one must-bring deliverable</label>
+        <input type="text" id="${id}_deliv" placeholder="the single thing I own for this meeting">
+      </div>`).join("");
+  }
+
+  /* ---------- LEAD PILLS ---------- */
+  function wireLeadPills(){
+    document.querySelectorAll("#anchors .pill input").forEach(cb=>{
+      const sync=()=>cb.closest(".pill").classList.toggle("on",cb.checked);
+      cb.addEventListener("change",()=>{sync();save();}); sync();
+    });
+  }
+
+  /* ---------- SAVE / LOAD ---------- */
+  const KEY="wmos_offering_worksheet_v1";
+  function allFields(){return document.querySelectorAll("input, textarea");}
+  function save(){
+    try{
+      const data={};
+      allFields().forEach(el=>{
+        const k = el.id || (el.name+"::"+el.value);
+        if(el.type==="checkbox"){ if(el.id) data[el.id]=el.checked; }
+        else if(el.type==="radio"){ if(el.checked) data["radio::"+el.name]=el.value; }
+        else if(el.id){ data[el.id]=el.value; }
+      });
+      localStorage.setItem(KEY,JSON.stringify(data));
+      flash("Saved on this device ✓");
+    }catch(e){ $("savedMsg").textContent="(Saving unavailable — use Download answers)"; }
+  }
+  let flashT;
+  function flash(msg){ $("savedMsg").textContent=msg; clearTimeout(flashT);
+    flashT=setTimeout(()=>$("savedMsg").textContent="Auto-saving on this device…",1500); }
+  function load(){
+    try{
+      const raw=localStorage.getItem(KEY); if(!raw) return;
+      const data=JSON.parse(raw);
+      Object.keys(data).forEach(k=>{
+        if(k.startsWith("radio::")){
+          const name=k.slice(7);
+          const el=document.querySelector(`input[name="${name}"][value="${data[k]}"]`);
+          if(el){ el.checked=true; const seg=el.closest(".seg");
+            if(seg){seg.querySelectorAll("label").forEach(l=>l.classList.remove("on"));el.closest("label").classList.add("on");}}
+        } else {
+          const el=$(k); if(!el) return;
+          if(el.type==="checkbox") el.checked=data[k]; else el.value=data[k];
+        }
+      });
+    }catch(e){}
+  }
+
+  /* ---------- DOWNLOAD ---------- */
+  function downloadAnswers(){
+    const L=[]; const g=id=>($(id)?$(id).value:"");
+    L.push("WMOS — SERVICE OFFERING & VALUE PROPOSITION");
+    L.push("="+"=".repeat(48)+"\n");
+    L.push("1) WHO WE ARE");
+    L.push("Positioning: "+g("pos_oneline"));
+    L.push("Core promise: "+g("pos_promise"));
+    const anchorsOn=[...document.querySelectorAll("#anchors .pill input")].filter(c=>c.checked).map(c=>c.parentElement.textContent.trim());
+    L.push("Lead anchors: "+anchorsOn.join("; "));
+    L.push("Vs agency: "+g("pos_vsagency"));
+    L.push("Mutual learning: "+g("pos_mutual")+"\n");
+
+    L.push("2) WHAT WE OFFER (in offer = ✓)");
+    [["o1","PSP™ standard"],["o2","Photogrammetry/3D"],["o3","Digital workflow"],["o4","Marketing/CRM"],["o5","Clinical training"]]
+      .forEach(([p,n])=>L.push(($(p+"_in").checked?"[x] ":"[ ] ")+n+" — "+g(p+"_note")));
+    L.push("");
+
+    L.push("3) SCOPE");
+    scopeItems.forEach(([id,name])=>{
+      const v=document.querySelector(`input[name="${id}"]:checked`);
+      L.push(" - "+name+": "+(v?v.value.toUpperCase():"-"));
+    });
+    L.push("");
+
+    L.push("4) CASCADE OF EVENTS");
+    phases.forEach(([id,t])=>L.push(" - "+t+" | owner: "+g(id+"_owner")+" | "+g(id+"_date")));
+    L.push("");
+
+    L.push("5) ONBOARDING MATERIALS");
+    materials.forEach(([id,name])=>L.push(($(id+"_done").checked?"[x] ":"[ ] ")+name+" | owner: "+g(id+"_owner")+" | "+g(id+"_status")));
+    L.push("");
+
+    L.push("6) NEXT MEETING — WHO BRINGS WHAT");
+    people.forEach(([name,,role,id])=>{ L.push(name+" ("+role+"):"); L.push(g(id+"_brings")); L.push("  >> Must-bring: "+g(id+"_deliv")+"\n"); });
+
+    const blob=new Blob([L.join("\n")],{type:"text/plain"});
+    const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+    a.download="WMOS_Offering_Worksheet.txt"; a.click();
+  }
+
+  function resetAll(){
+    if(!confirm("Clear all your entries and restore defaults?")) return;
+    try{localStorage.removeItem(KEY);}catch(e){}
+    location.reload();
+  }
+
+  /* ---------- INIT ---------- */
+  renderScope(); renderTimeline(); renderMaterials(); renderPeople(); wireLeadPills();
+  load();
+  document.addEventListener("input", e=>{ if(e.target.matches("input,textarea")) save(); });
+</script>
+</body>
+</html>
