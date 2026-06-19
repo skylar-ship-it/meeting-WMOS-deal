@@ -144,17 +144,6 @@
     <label class="fld">Core promise (lead with this for B2B)</label>
     <input type="text" id="pos_promise" value="The Patient-Specific Protocol™ (PSP™): every case planned from scratch — bone, anatomy, circumstances. No templates. The protocol is the product.">
 
-    <label class="fld">Which proof anchors do we lead with for WMOS?</label>
-    <p class="tip">Pick the 3–4 that land hardest with a 7-surgeon group.</p>
-    <div class="lead" id="anchors">
-      <label class="pill on"><input type="checkbox" id="a_omfs" checked> Board-certified OMFS (ABOMS)</label>
-      <label class="pill on"><input type="checkbox" id="a_vol" checked> 35+ yrs / 15,000+ implants</label>
-      <label class="pill on"><input type="checkbox" id="a_psp" checked> PSP™ proprietary protocol</label>
-      <label class="pill"><input type="checkbox" id="a_ada"> ADA Innovation Advisory Committee</label>
-      <label class="pill"><input type="checkbox" id="a_nhl"> Former Blackhawks (NHL) team surgeon</label>
-      <label class="pill on"><input type="checkbox" id="a_run" checked> Runs live in our own practice (proof of concept)</label>
-    </div>
-
     <label class="fld">Why us, not a marketing agency? (one sentence)</label>
     <input type="text" id="pos_vsagency" value="Most competitors sell ads, leads, or a bit of sales coaching. We install the whole clinical-commercial system — built by a board-certified surgeon, not an outside marketer.">
 
@@ -357,14 +346,6 @@
       </div>`).join("");
   }
 
-  /* ---------- LEAD PILLS ---------- */
-  function wireLeadPills(){
-    document.querySelectorAll("#anchors .pill input").forEach(cb=>{
-      const sync=()=>cb.closest(".pill").classList.toggle("on",cb.checked);
-      cb.addEventListener("change",()=>{sync();save();}); sync();
-    });
-  }
-
   /* ---------- SAVE / LOAD ---------- */
   const KEY="wmos_offering_worksheet_v1";
   function allFields(){return document.querySelectorAll("input, textarea");}
@@ -409,8 +390,6 @@
     L.push("1) WHO WE ARE");
     L.push("Positioning: "+g("pos_oneline"));
     L.push("Core promise: "+g("pos_promise"));
-    const anchorsOn=[...document.querySelectorAll("#anchors .pill input")].filter(c=>c.checked).map(c=>c.parentElement.textContent.trim());
-    L.push("Lead anchors: "+anchorsOn.join("; "));
     L.push("Vs agency: "+g("pos_vsagency"));
     L.push("Mutual learning: "+g("pos_mutual")+"\n");
 
@@ -449,7 +428,7 @@
   }
 
   /* ---------- INIT ---------- */
-  renderScope(); renderTimeline(); renderMaterials(); renderPeople(); wireLeadPills();
+  renderScope(); renderTimeline(); renderMaterials(); renderPeople();
   load();
   document.addEventListener("input", e=>{ if(e.target.matches("input,textarea")) save(); });
 </script>
