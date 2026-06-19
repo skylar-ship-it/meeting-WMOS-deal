@@ -21,9 +21,9 @@
   .toolbar{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);
     box-shadow:0 2px 8px rgba(0,0,0,.05);padding:10px 18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center}
   .toolbar .saved{font-size:12.5px;color:var(--green);margin-right:auto;font-weight:700}
-  .toolbar button{border:1.5px solid var(--blue);background:#fff;color:var(--blue);border-radius:8px;
-    padding:8px 14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit}
-  .toolbar button:hover{background:var(--sky)}
+  .toolbar button,.toolbar a.tbtn{border:1.5px solid var(--blue);background:#fff;color:var(--blue);border-radius:8px;
+    padding:8px 14px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none}
+  .toolbar button:hover,.toolbar a.tbtn:hover{background:var(--sky)}
   .toolbar button.primary{background:var(--blue);color:#fff}
   .toolbar button.primary:hover{background:var(--navy)}
 
@@ -56,7 +56,6 @@
   .lead .pill input{accent-color:var(--blue)}
   .lead .pill.on{border-color:var(--blue);background:var(--sky);font-weight:700;color:var(--navy)}
 
-  /* offering rows */
   .part{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0;background:#fbfdff}
   .part .ph{display:flex;align-items:center;gap:10px}
   .part .pn{width:26px;height:26px;border-radius:6px;background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px;flex:none}
@@ -66,7 +65,6 @@
   .toggle{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--grey);display:flex;gap:6px;align-items:center;cursor:pointer}
   .toggle input{width:16px;height:16px;accent-color:var(--green)}
 
-  /* scope buckets */
   .scope{display:grid;grid-template-columns:2.4fr 1fr;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed #e2ebf4}
   .scope:last-child{border-bottom:none}
   .scope .sname{font-size:14px;font-weight:600}
@@ -79,7 +77,6 @@
   .seg input{display:none}
   @media(max-width:640px){.scope{grid-template-columns:1fr}}
 
-  /* timeline */
   .tl{position:relative;margin-left:8px;padding-left:24px;border-left:3px solid var(--sky2)}
   .phase{position:relative;margin-bottom:18px}
   .phase::before{content:"";position:absolute;left:-31px;top:3px;width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 2px var(--blue)}
@@ -93,7 +90,6 @@
   .flag{background:#fdeee9;border-left:5px solid var(--red);border-radius:8px;padding:12px 14px;margin:14px 0;font-size:13.5px}
   .flag b{color:var(--red)}
 
-  /* people */
   .people{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   @media(max-width:680px){.people{grid-template-columns:1fr}}
   .person{border:1px solid var(--line);border-radius:10px;padding:16px;background:#fbfdff}
@@ -120,6 +116,7 @@
 </header>
 
 <div class="toolbar">
+  <a class="tbtn" href="index.html">← Back to hub</a>
   <span class="saved" id="savedMsg">Auto-saving on this device…</span>
   <button onclick="downloadAnswers()">⬇ Download answers</button>
   <button onclick="window.print()">🖨 Print / Save PDF</button>
@@ -255,7 +252,7 @@
     ["sc_psp","PSP™ clinical standard + Dr. Pulver case review","Core of the offer","inc"],
     ["sc_photo","Photogrammetry + 3D planning integration","The planning engine","inc"],
     ["sc_kpi","KPI tracking & performance management","25/50/25 targets, scorecard","inc"],
-    ["sc_tc","Treatment coordinator training","Platinum Minute, call scripts, close method","inc"],
+    ["sc_tc","Treatment coordinator training","Platinum Minute, call scripts, close methodology","inc"],
     ["sc_gp","GP Inner Circle referral network","Referral tiers & management","inc"],
     ["sc_mktg","General marketing + SEO + Instagram takeover","OPEN — redirect their agency spend?","add"],
     ["sc_workflow","Digital workflow training (print/stain/glaze)","Additional charge","add"],
@@ -375,7 +372,6 @@
     try{
       const data={};
       allFields().forEach(el=>{
-        const k = el.id || (el.name+"::"+el.value);
         if(el.type==="checkbox"){ if(el.id) data[el.id]=el.checked; }
         else if(el.type==="radio"){ if(el.checked) data["radio::"+el.name]=el.value; }
         else if(el.id){ data[el.id]=el.value; }
