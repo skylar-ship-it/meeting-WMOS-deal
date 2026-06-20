@@ -65,17 +65,22 @@
   .toggle{margin-left:auto;font-size:12.5px;font-weight:700;color:var(--grey);display:flex;gap:6px;align-items:center;cursor:pointer}
   .toggle input{width:16px;height:16px;accent-color:var(--green)}
 
-  .scope{display:grid;grid-template-columns:2.4fr 1fr;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed #e2ebf4}
-  .scope:last-child{border-bottom:none}
-  .scope .sname{font-size:14px;font-weight:600}
-  .scope .sname small{display:block;color:var(--grey);font-weight:400;font-size:12px}
-  .seg{display:flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
-  .seg label{flex:1;text-align:center;font-size:11.5px;font-weight:700;padding:7px 4px;cursor:pointer;color:var(--grey)}
-  .seg label.inc.on{background:var(--green);color:#fff}
-  .seg label.add.on{background:var(--amber);color:#fff}
-  .seg label.out.on{background:var(--grey);color:#fff}
-  .seg input{display:none}
-  @media(max-width:640px){.scope{grid-template-columns:1fr}}
+  .scope2{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:10px 0;background:#fbfdff}
+  .scoperow{display:flex;gap:10px;align-items:center}
+  .sname-in{flex:1;font-weight:600}
+  .seg{display:flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
+  .segbtn{border:none;background:#fff;color:var(--grey);font-size:11.5px;font-weight:700;padding:8px 12px;cursor:pointer;font-family:inherit;border-right:1px solid var(--line)}
+  .segbtn:last-child{border-right:none}
+  .segbtn.inc.on{background:var(--green);color:#fff}
+  .segbtn.add.on{background:var(--amber);color:#fff}
+  .segbtn.out.on{background:var(--grey);color:#fff}
+  .del{border:none;background:#fff;color:var(--red);font-size:15px;font-weight:800;cursor:pointer;border-radius:6px;padding:4px 9px;flex:none}
+  .del:hover{background:#fdeee9}
+  .cmt{width:100%;margin-top:8px;font-size:13px;border:1.5px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff;font-family:inherit;resize:vertical;min-height:34px;color:var(--ink)}
+  .cmt:focus,.sname-in:focus{outline:none;border-color:var(--blue)}
+  .add-scope{margin-top:12px;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+  .add-scope:hover{background:var(--navy)}
+  @media(max-width:640px){.scoperow{flex-wrap:wrap}.sname-in{flex:1 1 100%}}
 
   .tl{position:relative;margin-left:8px;padding-left:24px;border-left:3px solid var(--sky2)}
   .phase{position:relative;margin-bottom:18px}
@@ -139,13 +144,13 @@
 
     <label class="fld">One-line positioning</label>
     <p class="tip">Default pulled from the IW site. Make it WMOS-specific if needed.</p>
-    <input type="text" id="pos_oneline" value="A clinical-commercial operating system for surgeon-led full-arch — the system that runs in our own practice, packaged to deploy in yours. Not an agency.">
+    <input type="text" id="pos_oneline" value="A clinical-commercial operating system for surgeon-led full-arch — the system that runs in our own practice, packaged to deploy in yours.">
 
     <label class="fld">Core promise (lead with this for B2B)</label>
-    <input type="text" id="pos_promise" value="The Patient-Specific Protocol™ (PSP™): every case planned from scratch — bone, anatomy, circumstances. No templates. The protocol is the product.">
+    <input type="text" id="pos_promise" value="IW provides 4 platforms designed to take the specialist surgical practice to the next level of full-arch care. We focus on our proprietary Patient-Specific Protocol™ (PSP™): every case planned from scratch — bone, anatomy, circumstances. No templates. The protocol is the product.">
 
     <label class="fld">Why us, not a marketing agency? (one sentence)</label>
-    <input type="text" id="pos_vsagency" value="Most competitors sell ads, leads, or a bit of sales coaching. We install the whole clinical-commercial system — built by a board-certified surgeon, not an outside marketer.">
+    <input type="text" id="pos_vsagency" value="Most competitors sell ads, leads, or a bit of sales coaching. We install the whole clinical-commercial system — built and led by a board-certified maxillofacial surgeon, not an outside marketer, web designer, consultant, or trainer.">
 
     <label class="fld">The mutual-learning angle (relationship framing)</label>
     <input type="text" id="pos_mutual" value="A long-term, friendly partnership: we learn from their group's volume, they learn our system — we only win when their full-arch program wins.">
@@ -153,35 +158,35 @@
 
   <!-- 2. WHAT WE OFFER -->
   <section class="card">
-    <div class="sechead"><span class="secnum">2</span><h2>What We Offer — One Platform, Five Working Parts</h2></div>
-    <p class="secsub">Check what's in the WMOS offer and note what each part concretely means for them. (The parts compound — that's the pitch.)</p>
+    <div class="sechead"><span class="secnum">2</span><h2>What We Offer — The Platforms</h2></div>
+    <p class="secsub">IW provides 4 platforms (plus supporting components) to take a specialist practice to the next level of full-arch care. Check what's in the WMOS offer and note what each piece means for them.</p>
 
     <div class="part">
       <div class="ph"><span class="pn">1</span><h3>Patient-Specific Protocol™ &amp; Clinical Standard</h3>
         <label class="toggle"><input type="checkbox" id="o1_in" checked> In offer</label></div>
       <p class="pdesc">The proprietary clinical core — every case planned from scratch, surgeon-led, outcome-accountable.</p>
-      <div class="pin"><textarea id="o1_note" placeholder="What this means for WMOS…">Dr. Pulver case review + the PSP planning standard installed in their workflow; named protocol they can market but not have copied.</textarea></div>
+      <div class="pin"><textarea id="o1_note" placeholder="What this means for WMOS…">Dr. Pulver case review + the PSP planning standard installed in their workflow; named protocol they can market but not have copied. We strive to maintain hard and soft tissue volume and plan for long-term success and enhanced outcomes.</textarea></div>
     </div>
 
     <div class="part">
       <div class="ph"><span class="pn">2</span><h3>AI Photogrammetry &amp; 3D Planning</h3>
         <label class="toggle"><input type="checkbox" id="o2_in" checked> In offer</label></div>
       <p class="pdesc">The engine the protocol runs on — makes case-specific planning concrete.</p>
-      <div class="pin"><textarea id="o2_note" placeholder="What this means for WMOS…">Photogrammetry + 3D planning integration; SprintRay printer routed into our setup so WMOS doesn't output their own (third-party step required).</textarea></div>
+      <div class="pin"><textarea id="o2_note" placeholder="What this means for WMOS…">Photogrammetry + 3D planning integration; 3D printer routed into our setup so WMOS doesn't output their own (third-party step required). We can consider supplying the IOS, printer, and photogrammetry at preferred pricing — this means setting up meetings with the C-level of each company. IOS: Trios / Medit / etc. Photogrammetry: iCAM / Shining 3D. Printer: SprintRay.</textarea></div>
     </div>
 
     <div class="part">
       <div class="ph"><span class="pn">3</span><h3>Digital Workflow (Print · Stain · Glaze)</h3>
         <label class="toggle"><input type="checkbox" id="o3_in" checked> In offer</label></div>
       <p class="pdesc">Prosthetic outcome owned end-to-end with structured training.</p>
-      <div class="pin"><textarea id="o3_note" placeholder="What this means for WMOS…">Digital workflow training (printing, staining, glazing) — priced as an add-on on top of the 10%.</textarea></div>
+      <div class="pin"><textarea id="o3_note" placeholder="What this means for WMOS…">Digital workflow training (printing, staining, glazing) — priced as an add-on on top of the 10%. Platforms 3 &amp; 4 are similar, but we could re-gear #3: most oral surgery and periodontal practices feel most challenged by the prosthetic component of care. That points to a separate Education module — didactic + hands-on training on the prosthetics of full arch (add-on training module, for a fee).</textarea></div>
     </div>
 
     <div class="part">
       <div class="ph"><span class="pn">4</span><h3>Marketing &amp; CRM Infrastructure</h3>
         <label class="toggle"><input type="checkbox" id="o4_in"> In offer</label></div>
       <p class="pdesc">Full demand engine — campaigns, landing pages, GHL CRM, automated follow-up, referral network.</p>
-      <div class="pin"><textarea id="o4_note" placeholder="What this means for WMOS…">OPEN DECISION: do we take over their general marketing + SEO + Instagram and redirect their current agency spend to us? Decide on capacity + margin first.</textarea></div>
+      <div class="pin"><textarea id="o4_note" placeholder="What this means for WMOS…">IW will create a landing page and Direct-to-Consumer (DTC) campaigns plus a CRM to track and close leads using Go High Level (GHL). OPEN DECISION: do we also take over their general marketing + SEO + Instagram and redirect their current agency spend to us? Decide on capacity + margin first.</textarea></div>
     </div>
 
     <div class="part">
@@ -190,14 +195,22 @@
       <p class="pdesc">Cadaver + live-surgical training plus first-case support — surgeons reach fluency with a mentor in the room.</p>
       <div class="pin"><textarea id="o5_note" placeholder="What this means for WMOS…">Cadaver course (Phoenix) or live treatment (Mexico) as paid add-ons; first-case support free initially, small fee for later cases.</textarea></div>
     </div>
+
+    <div class="part">
+      <div class="ph"><span class="pn">6</span><h3>Inner Circle Referral Network</h3>
+        <label class="toggle"><input type="checkbox" id="o6_in" checked> In offer</label></div>
+      <p class="pdesc">A referral program that helps loyal GPs find and refer full-arch patients.</p>
+      <div class="pin"><textarea id="o6_note" placeholder="What this means for WMOS…">ContinUdent branding + marketing provided to support loyal referrals in finding and referring FULL-ARCH patients — an à la carte menu of involvement based on referral participation and the dollar amount of the closed case. See www.ContinUdent.com — "All On Everyday" could be rebranded as Implanted Wisdom (IW).</textarea></div>
+    </div>
   </section>
 
   <!-- 3. SCOPE -->
   <section class="card">
     <div class="sechead"><span class="secnum">3</span><h2>Scope — What's Included vs. Add-On vs. Out</h2></div>
-    <p class="secsub">Tap a bucket for each item. Green = covered by retainer + 10%. Amber = billable add-on. Grey = out of scope / WMOS owns. (Defaults set from the deal notes.)</p>
+    <p class="secsub">Tap a bucket for each item. Green = covered by retainer + 10%. Amber = billable add-on. Grey = out of scope / WMOS owns. Edit any name, add a comment, delete a row, or add your own items. (Defaults set from the deal notes.)</p>
     <div id="scopeList"></div>
-    <p class="flag" style="background:#fff8e9;border-left-color:var(--amber)">
+    <button type="button" class="add-scope" id="addScope">+ Add scope item</button>
+    <p class="flag" style="background:#fff8e9;border-left-color:var(--amber);margin-top:16px">
       <b>Biggest open scope call:</b> the marketing / SEO / Instagram takeover. It's revenue, but it's capacity-heavy — decide yes/no before Meeting 1.</p>
   </section>
 
@@ -236,41 +249,53 @@
 <script>
   const $ = id => document.getElementById(id);
 
-  /* ---------- SCOPE ITEMS ---------- */
-  const scopeItems = [
-    ["sc_psp","PSP™ clinical standard + Dr. Pulver case review","Core of the offer","inc"],
-    ["sc_photo","Photogrammetry + 3D planning integration","The planning engine","inc"],
-    ["sc_kpi","KPI tracking & performance management","25/50/25 targets, scorecard","inc"],
-    ["sc_tc","Treatment coordinator training","Platinum Minute, call scripts, close methodology","inc"],
-    ["sc_gp","GP Inner Circle referral network","Referral tiers & management","inc"],
-    ["sc_mktg","General marketing + SEO + Instagram takeover","OPEN — redirect their agency spend?","add"],
-    ["sc_workflow","Digital workflow training (print/stain/glaze)","Additional charge","add"],
-    ["sc_cadaver","Cadaver course (Phoenix)","Outside training — additional charge","add"],
-    ["sc_live","Live treatment training (Mexico)","Outside training — additional charge","add"],
-    ["sc_sprint","SprintRay printer integration","Needs a third party first","add"],
-    ["sc_firstcase","First-case implementation support","Free initially, small fee later","add"],
-    ["sc_hire","Coordinator hires (treatment/surgical)","WMOS may hire or train front desk","out"],
-    ["sc_clin","Clinical execution & final case approval","WMOS owns this","out"],
+  /* ---------- SCOPE ITEMS (editable) ---------- */
+  const esc = s => (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  const defaultScope = [
+    {name:"PSP™ clinical standard + Dr. Pulver case review", bucket:"inc", comment:"Core of the offer"},
+    {name:"Photogrammetry + 3D planning integration", bucket:"inc", comment:"The planning engine"},
+    {name:"KPI tracking & performance management", bucket:"inc", comment:"25/50/25 targets, scorecard"},
+    {name:"Treatment coordinator training", bucket:"inc", comment:"Platinum Minute, call scripts, close methodology"},
+    {name:"GP Inner Circle referral network", bucket:"inc", comment:"Referral tiers & management"},
+    {name:"General marketing + SEO + Instagram takeover", bucket:"add", comment:"OPEN — redirect their agency spend?"},
+    {name:"Digital workflow training (print/stain/glaze)", bucket:"add", comment:"Additional charge"},
+    {name:"Cadaver course (Phoenix)", bucket:"add", comment:"Outside training — additional charge"},
+    {name:"Live treatment training (Mexico)", bucket:"add", comment:"Outside training — additional charge"},
+    {name:"SprintRay printer integration", bucket:"add", comment:"Needs a third party first"},
+    {name:"First-case implementation support", bucket:"add", comment:"Free initially, small fee later"},
+    {name:"Coordinator hires (treatment/surgical)", bucket:"out", comment:"WMOS may hire or train front desk"},
+    {name:"Clinical execution & final case approval", bucket:"out", comment:"WMOS owns this"},
   ];
+  let scopeData = defaultScope.map(o=>({...o}));
+  const buckets = [["inc","Included"],["add","Add-on"],["out","Out"]];
+
   function renderScope(){
-    $("scopeList").innerHTML = scopeItems.map(([id,name,sub,def])=>`
-      <div class="scope">
-        <div class="sname">${name}<small>${sub}</small></div>
-        <div class="seg" data-id="${id}">
-          <label class="inc ${def==='inc'?'on':''}"><input type="radio" name="${id}" value="inc" ${def==='inc'?'checked':''}>Included</label>
-          <label class="add ${def==='add'?'on':''}"><input type="radio" name="${id}" value="add" ${def==='add'?'checked':''}>Add-on</label>
-          <label class="out ${def==='out'?'on':''}"><input type="radio" name="${id}" value="out" ${def==='out'?'checked':''}>Out</label>
+    $("scopeList").innerHTML = scopeData.map((it,i)=>`
+      <div class="scope2">
+        <div class="scoperow">
+          <input class="sname-in" type="text" data-i="${i}" data-k="name" value="${esc(it.name)}" placeholder="Scope item">
+          <div class="seg">
+            ${buckets.map(([v,l])=>`<button type="button" class="segbtn ${v} ${it.bucket===v?'on':''}" data-i="${i}" data-v="${v}">${l}</button>`).join("")}
+          </div>
+          <button type="button" class="del" data-i="${i}" title="Delete this item">✕</button>
         </div>
+        <textarea class="cmt" data-i="${i}" data-k="comment" placeholder="Comment / notes on this item…">${esc(it.comment)}</textarea>
       </div>`).join("");
-    document.querySelectorAll(".seg").forEach(seg=>{
-      seg.querySelectorAll("input").forEach(inp=>{
-        inp.addEventListener("change",()=>{
-          seg.querySelectorAll("label").forEach(l=>l.classList.remove("on"));
-          inp.closest("label").classList.add("on"); save();
-        });
-      });
+
+    $("scopeList").querySelectorAll(".sname-in,.cmt").forEach(el=>{
+      el.addEventListener("input",()=>{ scopeData[+el.dataset.i][el.dataset.k]=el.value; saveScope(); });
+    });
+    $("scopeList").querySelectorAll(".segbtn").forEach(b=>{
+      b.addEventListener("click",()=>{ scopeData[+b.dataset.i].bucket=b.dataset.v; renderScope(); saveScope(); });
+    });
+    $("scopeList").querySelectorAll(".del").forEach(b=>{
+      b.addEventListener("click",()=>{ scopeData.splice(+b.dataset.i,1); renderScope(); saveScope(); });
     });
   }
+
+  const SCOPE_KEY = "wmos_offering_worksheet_v1_scope";
+  function saveScope(){ try{ localStorage.setItem(SCOPE_KEY,JSON.stringify(scopeData)); flash("Saved on this device ✓"); }catch(e){} }
+  function loadScope(){ try{ const s=localStorage.getItem(SCOPE_KEY); if(s){ const a=JSON.parse(s); if(Array.isArray(a)) scopeData=a; } }catch(e){} }
 
   /* ---------- TIMELINE ---------- */
   const phases = [
@@ -394,14 +419,13 @@
     L.push("Mutual learning: "+g("pos_mutual")+"\n");
 
     L.push("2) WHAT WE OFFER (in offer = ✓)");
-    [["o1","PSP™ standard"],["o2","Photogrammetry/3D"],["o3","Digital workflow"],["o4","Marketing/CRM"],["o5","Clinical training"]]
+    [["o1","PSP™ standard"],["o2","Photogrammetry/3D"],["o3","Digital workflow"],["o4","Marketing/CRM"],["o5","Clinical training"],["o6","Inner Circle Referral Network"]]
       .forEach(([p,n])=>L.push(($(p+"_in").checked?"[x] ":"[ ] ")+n+" — "+g(p+"_note")));
     L.push("");
 
     L.push("3) SCOPE");
-    scopeItems.forEach(([id,name])=>{
-      const v=document.querySelector(`input[name="${id}"]:checked`);
-      L.push(" - "+name+": "+(v?v.value.toUpperCase():"-"));
+    scopeData.forEach(it=>{
+      L.push(" - "+(it.name||"(unnamed)")+": "+(it.bucket?it.bucket.toUpperCase():"-")+(it.comment?"  // "+it.comment:""));
     });
     L.push("");
 
@@ -423,14 +447,18 @@
 
   function resetAll(){
     if(!confirm("Clear all your entries and restore defaults?")) return;
-    try{localStorage.removeItem(KEY);}catch(e){}
+    try{localStorage.removeItem(KEY);localStorage.removeItem(SCOPE_KEY);}catch(e){}
     location.reload();
   }
 
   /* ---------- INIT ---------- */
-  renderScope(); renderTimeline(); renderMaterials(); renderPeople();
+  loadScope(); renderScope(); renderTimeline(); renderMaterials(); renderPeople();
   load();
-  document.addEventListener("input", e=>{ if(e.target.matches("input,textarea")) save(); });
+  $("addScope").addEventListener("click",()=>{
+    scopeData.push({name:"",bucket:"inc",comment:""}); renderScope(); saveScope();
+    const ins=$("scopeList").querySelectorAll(".sname-in"); if(ins.length) ins[ins.length-1].focus();
+  });
+  document.addEventListener("input", e=>{ if(e.target.matches("input,textarea") && !e.target.closest("#scopeList")) save(); });
 </script>
 </body>
 </html>
